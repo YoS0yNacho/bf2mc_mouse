@@ -1,5 +1,5 @@
 # bf2mc_mouse
-Mouse injector for BF2MC (PS2)
+Mouse injector for BF2MC (PS2).
 Only works with PAL 2.00 Release (SLES_537.29)
 
 
