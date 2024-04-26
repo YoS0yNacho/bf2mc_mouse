@@ -17,7 +17,7 @@ patch=1,EE,200F4234,extended,08128535
 //patch=1,EE,200F4248,extended,0000d821
 //patch=1,EE,200F424c,extended,080ef81b
 
-//scope mode
+//scope mode 000F4204
 patch=1,EE,203E3928,extended,0803D08f
 patch=1,EE,200F423C,extended,8e830020
 patch=1,EE,200F4240,extended,3c1b000f
