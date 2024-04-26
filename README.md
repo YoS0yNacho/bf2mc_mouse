@@ -1,7 +1,9 @@
-# bf2mc_mouse
-Mouse injector for BF2MC (PS2) (pcsx2-qt linux)
-.Only works with PAL 2.01 Release (SLES_537.29)
-.It doesn't work on vehicles
+## bf2mc_mouse
+Mouse injector for BF2MC (PS2) (pcsx2-qt linux).
+
+*Only works with PAL 2.01 Release (SLES_537.29).
+
+*It doesn't work on vehicles.
 
 
 
