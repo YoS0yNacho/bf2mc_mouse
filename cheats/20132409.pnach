@@ -1,4 +1,4 @@
-
+// CRC 20132409 v2.01 PAL
 //move camera base to 000F4200
 patch=1,EE,204A14D0,extended,0803D088
 patch=1,EE,200F4220,extended,C62C0008
