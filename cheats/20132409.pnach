@@ -1,0 +1,34 @@
+BF2MC PAL 2.01
+//move camera base to 000F4200
+patch=1,EE,204A14D0,extended,0803D088
+patch=1,EE,200F4220,extended,C62C0008
+patch=1,EE,200F4224,extended,3C1b000F
+patch=1,EE,200F4228,extended,377B4200
+patch=1,EE,200F422C,extended,AF710000
+patch=1,EE,200F4230,extended,0000d821
+patch=1,EE,200F4234,extended,08128535
+
+//hp pointer
+//patch=1,EE,203BE068,extended,0803D08E
+//patch=1,EE,200F4238,extended,8e040000
+//patch=1,EE,200F423C,extended,3c1b000f
+//patch=1,EE,200F4240,extended,377b4204
+//patch=1,EE,200F4244,extended,af700000
+//patch=1,EE,200F4248,extended,0000d821
+//patch=1,EE,200F424c,extended,080ef81b
+
+//scope mode
+patch=1,EE,203E3928,extended,0803D08f
+patch=1,EE,200F423C,extended,8e830020
+patch=1,EE,200F4240,extended,3c1b000f
+patch=1,EE,200F4244,extended,377b4204
+patch=1,EE,200F4248,extended,af630000
+patch=1,EE,200F424C,extended,080f8e4b
+
+
+
+
+
+
+
+
