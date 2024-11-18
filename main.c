@@ -191,7 +191,7 @@ static void GUI_Welcome(void)
 static void GUI_Interact(void)
 {
 	uint8_t updateinterface = 0, updatequick = 0;
-	if(K_4) // mouse toggle (4)
+	if(K_0) // mouse toggle (4)
 	{
 		MOUSE_Lock();
 		MOUSE_Update(GAME_Tickrate());
@@ -263,7 +263,7 @@ static void GUI_Update(void)
 	// printf("\n Mouse Injector for %s %s - %s\n", GAME_Name(), BUILDINFO, hookedEmulatorName); // title
 	printf("\n Mouse Injector for %s - %s\n", hookedEmulatorName, GAME_Name()); // title
 	printf("%s\n\n   Main Menu - Press [#] to Use Menu\n\n\n", LINE);
-	printf(mousetoggle ? "   [4] - [ON] Mouse Injection\n\n" : "   [4] - [OFF] Mouse Injection\n\n");
+	printf(mousetoggle ? "   [0] - [ON] Mouse Injection\n\n" : "   [0] - [OFF] Mouse Injection\n\n");
 	if(!locksettings)
 	{
 		printf("   [5] - Mouse Sensitivity: %d%%", sensitivity * 5);
