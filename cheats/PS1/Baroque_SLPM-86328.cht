@@ -1,5 +1,0 @@
-#group=Ungrouped
-#type=Gameshark
-#activation=EndFrame
-[*Disable CamY Adjust On Hit (MouseInjector)]
-8001A2D4 0000
