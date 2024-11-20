@@ -28,8 +28,9 @@
 #define BF2_SCOPE_BASE_PTR 0xF4204
 #define BF2_RIGHTJOY_X 0xDF36E0
 #define BF2_RIGHTJOY_Y 0xDF36E4
-#define BF2_INMOUNTED 0xF4208
 #define BF2_CURRENTWEP_PTR 0xF420C 
+#define BF2_ONFOOT 0x1FE6A13
+#define BF2_INMOUNTED_PTR 0xF4208
 // offsets from camBase
 #define BF2_CAMX 0x4
 #define BF2_CAMY 0x8
@@ -93,6 +94,62 @@ static void SmoothMouseInput(float *x, float *y)
     lastY = *y;
 }
 
+static void InjectCam(void)
+{
+	uint32_t scopeModeBase = PS2_MEM_ReadUInt(BF2_SCOPE_BASE_PTR);
+	uint8_t scopeMode = PS2_MEM_ReadUInt8(scopeModeBase + 0x20);
+		
+	float looksensitivity = (float)sensitivity / 40.f;
+		
+	if (scopeMode == 1)
+	{
+		looksensitivity = looksensitivity / 2;	
+	} 
+	else if (scopeMode == 2)
+	{
+		looksensitivity = looksensitivity / 4;
+	} 
+		
+	float scale = 250.f;
+	// float fov = PS2_MEM_ReadFloat(RTCW_FOV) / 106.5f;
+	float fov = 1.f;
+		
+	float camX = PS2_MEM_ReadFloat(camBase + BF2_CAMX);
+	camX += (float)xmouse * looksensitivity / scale * fov;
+	PS2_MEM_WriteFloat(camBase + BF2_CAMX, (float)camX);
+		
+	float camY = PS2_MEM_ReadFloat(camBase + BF2_CAMY);
+	camY -= (float)(invertpitch ? -ymouse : ymouse) * looksensitivity / scale * fov;
+	PS2_MEM_WriteFloat(camBase + BF2_CAMY, (float)camY);
+}
+
+static void InjectRightStick(void)
+{
+    float scale = 250.f;
+    float looksensitivity = (float)sensitivity / 40.f;
+    looksensitivity = looksensitivity * 500;
+
+    float rx = (float)xmouse * looksensitivity / scale;
+    float ry = (float)(!invertpitch ? -ymouse : ymouse) * looksensitivity / scale;
+
+    // Implement dead zone
+    if (fabs(rx) < DEAD_ZONE) rx = 0;
+    if (fabs(ry) < DEAD_ZONE) ry = 0;
+
+    // Smooth the mouse input
+    SmoothMouseInput(&rx, &ry);
+
+    // Clamp the values to ensure they stay within the -1 to 1 range
+    if (rx > 1.0f) rx = 1.0f;
+    if (rx < -1.0f) rx = -1.0f;
+    if (ry > 1.0f) ry = 1.0f;
+    if (ry < -1.0f) ry = -1.0f;
+
+    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, rx);
+    PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, ry);
+}
+
+
 static void PS2_BF2_Inject(void)
 {
 	//uint32_t currentWepBase = PS2_MEM_ReadUInt(BF2_CURRENTWEP_PTR + 0x34);
@@ -102,6 +159,7 @@ static void PS2_BF2_Inject(void)
 	    Sleep(20);
 	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0);
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
+		return;
 	}
 	if (K_2)
 	{
@@ -109,6 +167,7 @@ static void PS2_BF2_Inject(void)
 	    Sleep(20);
 	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0);
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, -1);
+		return;
 	}
 	if (K_3)
 	{
@@ -116,6 +175,7 @@ static void PS2_BF2_Inject(void)
 	    Sleep(20);
 	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0);
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 1);
+		return;
 	}
 	if (K_4)
 	{
@@ -123,13 +183,15 @@ static void PS2_BF2_Inject(void)
 	    Sleep(20);
 	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, -1);
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
+		return;
 	}
 	if (K_5)
 	{
 	    // rx 1 ry 0 accesory 3 
 	    Sleep(20);
-	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0.9);
+	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0.1);
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
+		return;
 	}
 	//if(xmouse == 0 && ymouse == 0) // if mouse is idle
 	//	return;
@@ -137,73 +199,15 @@ static void PS2_BF2_Inject(void)
 	if (!PS2_BF2_DetectCamBase())
 		return;
 
-
-	uint32_t inMountedAddr = PS2_MEM_ReadUInt(BF2_INMOUNTED);
-
-	if (inMountedAddr == 0)
-		return; 
-
-	if (PS2_MEM_ReadUInt(inMountedAddr + 0x24) == 0)
+	if (!K_1 && !K_2 && !K_3 && !K_4 && !K_5 )
 	{
+		PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0);
+		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
+	}
 
-		if (!K_1 && !K_2 && !K_3 && !K_4 && !K_5 )
-		{
-			PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0);
-		    PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
-		}
-		
-		uint32_t scopeModeBase = PS2_MEM_ReadUInt(BF2_SCOPE_BASE_PTR);
-		uint8_t scopeMode = PS2_MEM_ReadUInt8(scopeModeBase + 0x20);
-		
-		float looksensitivity = (float)sensitivity / 40.f;
-		
-		if (scopeMode == 1)
-		{
-			looksensitivity = looksensitivity / 2;	
-		} 
-		else if (scopeMode == 2)
-		{
-			looksensitivity = looksensitivity / 4;
-		} 
-		
-		float scale = 250.f;
-		// float fov = PS2_MEM_ReadFloat(RTCW_FOV) / 106.5f;
-		float fov = 1.f;
-		
-		float camX = PS2_MEM_ReadFloat(camBase + BF2_CAMX);
-		camX += (float)xmouse * looksensitivity / scale * fov;
-		PS2_MEM_WriteFloat(camBase + BF2_CAMX, (float)camX);
-		
-		float camY = PS2_MEM_ReadFloat(camBase + BF2_CAMY);
-		camY -= (float)(invertpitch ? -ymouse : ymouse) * looksensitivity / scale * fov;
-		PS2_MEM_WriteFloat(camBase + BF2_CAMY, (float)camY);
-    }
-    else if (PS2_MEM_ReadUInt(inMountedAddr + 0x24) == 1) // Emulating right stick
-    {
-        float scale = 250.f;
-        float looksensitivity = (float)sensitivity / 40.f;
-        looksensitivity = looksensitivity * 500;
-
-        float rx = (float)xmouse * looksensitivity / scale;
-        float ry = (float)(!invertpitch ? -ymouse : ymouse) * looksensitivity / scale;
-
-        // Implement dead zone
-        if (fabs(rx) < DEAD_ZONE) rx = 0;
-        if (fabs(ry) < DEAD_ZONE) ry = 0;
-
-        // Smooth the mouse input
-        SmoothMouseInput(&rx, &ry);
-
-        // Clamp the values to ensure they stay within the -1 to 1 range
-        if (rx > 1.0f) rx = 1.0f;
-        if (rx < -1.0f) rx = -1.0f;
-        if (ry > 1.0f) ry = 1.0f;
-        if (ry < -1.0f) ry = -1.0f;
-
-        PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, rx);
-        PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, ry);
-    }
-
+	InjectCam();
+	InjectRightStick();
+	
 }	
 
 
