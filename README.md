@@ -2,9 +2,6 @@
 
 An external app that injects cursor input into game memory.
 
-### *If you have a game request, please go to the 'Discussions' tab and post it!*
-### _Scroll to bottom for_ <font color="red"> *FREQUENTLY ASKED QUESTIONS* </font>
-
 ## Supported versions
 SLUS_210.26 v1.00 (NTSC-U)
 * NOTE: When using vehicles/mounted gun, the injector emulates the right joystick so it may feel worse / different.
