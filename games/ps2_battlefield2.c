@@ -28,9 +28,9 @@
 #define BF2_SCOPE_BASE_PTR 0xF4204
 #define BF2_RIGHTJOY_X 0xDF36E0
 #define BF2_RIGHTJOY_Y 0xDF36E4
-#define BF2_CURRENTWEP_PTR 0xF420C 
 #define BF2_ONFOOT 0x1FE6A13
-#define BF2_INMOUNTED_PTR 0xF4208
+#define BF2_PLAYERSTATE 0xF761F5
+
 // offsets from camBase
 #define BF2_CAMX 0x4
 #define BF2_CAMY 0x8
@@ -189,7 +189,7 @@ static void PS2_BF2_Inject(void)
 	{
 	    // rx 1 ry 0 accesory 3 
 	    Sleep(20);
-	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 0.1);
+	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 1);
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
 		return;
 	}
@@ -205,9 +205,19 @@ static void PS2_BF2_Inject(void)
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
 	}
 
-	InjectCam();
-	InjectRightStick();
-	
+	uint32_t scopeModeBase = PS2_MEM_ReadUInt(BF2_SCOPE_BASE_PTR);
+	uint8_t scopeMode = PS2_MEM_ReadUInt8(scopeModeBase + 0x20);
+
+    if (PS2_MEM_ReadUInt8(BF2_PLAYERSTATE) == 6 || scopeMode > 0 )
+	{ 
+		InjectCam();
+	}
+	else 
+	{
+		InjectRightStick();
+	}
+
+
 }	
 
 
