@@ -60,26 +60,13 @@ patch=1,EE,203B0A74,extended,00000000
 //patch=1,EE,200F4278,extended,AF710000
 //patch=1,EE,200F427C,extended,081186BB
 
-//inmounted to 000F4208
-//004DB9D8
-//j 0x000F4254 0803D095
-//000F4254
-//sw v0,0x0(a0)       AC820000
-//lui k1,0x000F       3C1B000F
-//ori k1,k1,0x4208    377B4208
-//sw a0,0x0(k1)       AF640000
-//j 0x004DB9DC        08136E77
-
-//patch=1,EE,204DB9D8,extended,0803D095
-//patch=1,EE,200F4254,extended,AC820000
-//patch=1,EE,200F4258,extended,3C1B000F
-//patch=1,EE,200F425C,extended,377B4208
-//patch=1,EE,200F4260,extended,AF640000
-//patch=1,EE,200F4264,extended,08136E77
-
 //camera write off
-patch=1,EE,204A1DB4,extended,00000000
-patch=1,EE,204A1E08,extended,00000000
+//patch=1,EE,204a1a6c,extended,00000000
+//patch=1,EE,204a1a7c,extended,00000000
+//patch=1,EE,204a1b14,extended,00000000
+//patch=1,EE,204a1b18,extended,00000000
+//patch=1,EE,204a1a20,extended,00000000
+
 
 
 
