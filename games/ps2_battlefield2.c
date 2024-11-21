@@ -85,11 +85,25 @@ static void SmoothMouseInput(float *x, float *y)
 {
     static float lastX = 0;
     static float lastY = 0;
-    float smoothingFactor = 0.5f; // Adjust between 0 and 1
+    const float smoothingFactor = 0.3f; // Adjust this value to find the right smoothness
 
     // Smooth the mouse input for better movement
-    *x = (*x * smoothingFactor) + (lastX * (1 - smoothingFactor));
-    *y = (*y * smoothingFactor) + (lastY * (1 - smoothingFactor));
+    float deltaX = *x - lastX;
+    float deltaY = *y - lastY;
+
+    // Make adjustments based on the distance moved
+    if (fabs(deltaX) > DEAD_ZONE || fabs(deltaY) > DEAD_ZONE)
+    {
+        // Apply smoothing
+        *x = lastX + (deltaX * smoothingFactor);
+        *y = lastY + (deltaY * smoothingFactor);
+    }
+    else
+    {
+        // Keep last position if within dead zone
+        *x = lastX;
+        *y = lastY;
+    }
 
     lastX = *x;
     lastY = *y;
