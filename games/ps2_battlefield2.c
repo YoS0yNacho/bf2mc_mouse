@@ -22,6 +22,7 @@
 #include "../memory.h"
 #include "../mouse.h"
 #include "game.h"
+#include <math.h>
 
 // #define BF2_CAM_BASE_PTR 0x782B98
 #define BF2_CAM_BASE_PTR 0xF4200
@@ -189,10 +190,11 @@ static void PS2_BF2_Inject(void)
 	{
 	    // rx 1 ry 0 accesory 3 
 	    Sleep(20);
-	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 1);
 		PS2_MEM_WriteFloat(BF2_RIGHTJOY_Y, 0);
+	    PS2_MEM_WriteFloat(BF2_RIGHTJOY_X, 1);
 		return;
 	}
+	
 	//if(xmouse == 0 && ymouse == 0) // if mouse is idle
 	//	return;
 	
