@@ -19,6 +19,21 @@ SLUS_210.26 v1.00 (NTSC-U)
 * NOTE: Versions given are the latest that have been tested working, may work with newer
 * NOTE: PCSX2 will only hook with **BIOS versions 5XXXX and up**.
 
+## Mappings
+* 1-5 = switch weapons
+* Left click = R1 / Fire
+* Right click = R3 / Scope
+* Middle Mouse btn = R2 / Switch to primary weapon
+* WASD = movement
+* Arrows = dpad
+* E = X / use button
+* R = Circle / reload
+* Q = Square
+* F = Triangle / switch seat
+* Space = L1 / jump
+* CTRL = L2 / crouch
+* Enter = Start
+* TAB = Select
 
 ## How to Use
 1. Start emulator first
