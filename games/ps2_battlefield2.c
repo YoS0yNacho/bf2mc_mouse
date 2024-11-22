@@ -30,7 +30,7 @@
 #define BF2_RIGHTJOY_X 0xDF36E0
 #define BF2_RIGHTJOY_Y 0xDF36E4
 #define BF2_ONFOOT 0x1FE6A13
-#define BF2_PLAYERSTATE 0xF761F5
+#define BF2_FOV 0xE03FDE
 
 // offsets from camBase
 #define BF2_CAMX 0x4
@@ -126,8 +126,8 @@ static void InjectCam(void)
 	} 
 		
 	float scale = 250.f;
-	// float fov = PS2_MEM_ReadFloat(RTCW_FOV) / 106.5f;
-	float fov = 1.f;
+	uint8_t fov = PS2_MEM_ReadUInt8(BF2_FOV) / 86;
+	//float fov = 1.f;
 		
 	float camX = PS2_MEM_ReadFloat(camBase + BF2_CAMX);
 	camX += (float)xmouse * looksensitivity / scale * fov;
@@ -224,7 +224,7 @@ static void PS2_BF2_Inject(void)
 	uint32_t scopeModeBase = PS2_MEM_ReadUInt(BF2_SCOPE_BASE_PTR);
 	uint8_t scopeMode = PS2_MEM_ReadUInt8(scopeModeBase + 0x20);
 
-    if (PS2_MEM_ReadUInt8(BF2_PLAYERSTATE) == 6 || scopeMode > 0 )
+    if (PS2_MEM_ReadUInt8(BF2_FOV) < 127 || scopeMode > 0 )
 	{ 
 		InjectCam();
 	}
