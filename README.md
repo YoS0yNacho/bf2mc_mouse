@@ -29,7 +29,7 @@ SLUS_210.26 v1.00 (NTSC-U)
 * E = X / use button
 * R = Circle / reload
 * Q = Square
-* F = Triangle / switch seat
+* F = Triangle / parachute, switch seat
 * Space = L1 / jump
 * CTRL = L2 / crouch
 * Enter = Start
