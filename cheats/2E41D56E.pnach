@@ -35,14 +35,6 @@ patch=1,EE,200F4248,extended,AF740000
 patch=1,EE,200F424C,extended,080F8FCB
 
 // right joystick NOP  
-//003B0890
-//003B08B4
-//003B08B8
-//003B09F4
-//003B0A10
-//003B0A58
-//003B0A70
-//003B0A74
 patch=1,EE,203B0890,extended,00000000
 patch=1,EE,203B08B4,extended,00000000
 patch=1,EE,203B08B8,extended,00000000
@@ -51,6 +43,7 @@ patch=1,EE,203B0A10,extended,00000000
 patch=1,EE,203B0A58,extended,00000000
 patch=1,EE,203B0A70,extended,00000000
 patch=1,EE,203B0A74,extended,00000000
+patch=1,EE,204a1a20,extended,00000000
 
 //current weapon to 00F420C (addr + 34)
 //patch=1,EE,20461AE8,extended,0803D09B
@@ -66,6 +59,8 @@ patch=1,EE,203B0A74,extended,00000000
 //patch=1,EE,204a1b14,extended,00000000
 //patch=1,EE,204a1b18,extended,00000000
 //patch=1,EE,204a1a20,extended,00000000
+
+
 
 
 
