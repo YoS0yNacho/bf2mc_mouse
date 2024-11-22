@@ -126,8 +126,8 @@ static void InjectCam(void)
 	} 
 		
 	float scale = 250.f;
-	uint8_t fov = PS2_MEM_ReadUInt8(BF2_FOV) / 86;
-	//float fov = 1.f;
+	//fov = fov / 86;
+	float fov = 1.f;
 		
 	float camX = PS2_MEM_ReadFloat(camBase + BF2_CAMX);
 	camX += (float)xmouse * looksensitivity / scale * fov;
@@ -224,7 +224,9 @@ static void PS2_BF2_Inject(void)
 	uint32_t scopeModeBase = PS2_MEM_ReadUInt(BF2_SCOPE_BASE_PTR);
 	uint8_t scopeMode = PS2_MEM_ReadUInt8(scopeModeBase + 0x20);
 
-    if (PS2_MEM_ReadUInt8(BF2_FOV) < 127 || scopeMode > 0 )
+	uint8_t fov = PS2_MEM_ReadUInt8(BF2_FOV);
+
+    if (fov < 127 || scopeMode > 0 )
 	{ 
 		InjectCam();
 	}
