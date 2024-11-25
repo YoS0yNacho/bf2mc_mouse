@@ -142,7 +142,7 @@ static void InjectRightStick(void)
 {
     float scale = 250.f;
     float looksensitivity = (float)sensitivity / 40.f;
-    looksensitivity = looksensitivity * 500;
+    looksensitivity = looksensitivity * 250;
 
     float rx = (float)xmouse * looksensitivity / scale;
     float ry = (float)(!invertpitch ? -ymouse : ymouse) * looksensitivity / scale;
