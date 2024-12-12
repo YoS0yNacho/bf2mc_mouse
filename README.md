@@ -20,6 +20,7 @@ SLUS_210.26 v1.00 (NTSC-U)
 * NOTE: PCSX2 will only hook with **BIOS versions 5XXXX and up**.
 
 ## Mappings
+* 0 = Enable / Disable Mouse
 * 1-5 = switch weapons
 * Left click = R1 / Fire
 * Right click = R3 / Scope
