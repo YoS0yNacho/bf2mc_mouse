@@ -4,6 +4,7 @@ An external app that injects cursor input into game memory.
 
 ## Supported versions
 SLUS_210.26 v1.00 (NTSC-U)
+* NOTE: If the injector is not hooking, restart the emulator (System -> Restart) and then select the multiplayer option in the in-game menu and it should work.
 * NOTE: When using vehicles/mounted gun, the injector emulates the right joystick so it may feel worse / different.
 * NOTE: PCSX2 will only hook with **BIOS versions 5XXXX and up**.
 * NOTE: Some aspects may break when a game is started with overclocking. Requires testing.
